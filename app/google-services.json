@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "535420562404",
+    "firebase_url": "https://bankingsolution20-c4221.firebaseio.com",
+    "project_id": "bankingsolution20-c4221",
+    "storage_bucket": "bankingsolution20-c4221.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535420562404:android:84419d3209c56c165f75f1",
+        "android_client_info": {
+          "package_name": "android.m.bankingsolution"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535420562404-dnhmu0mdjij8nrda4kop7if57u07k0us.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYVGkTaa_uOX-Lln7oOA659DPZHFOZwwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535420562404-dnhmu0mdjij8nrda4kop7if57u07k0us.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
