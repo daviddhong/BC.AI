@@ -1,10 +1,12 @@
-package android.m.bankingsolution;
+package android.m.bankingsolution.ActivityLoginStart;
 
 
 import android.content.Intent;
+import android.m.bankingsolution.MainActivity;
+import android.m.bankingsolution.R;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +18,7 @@ public class InitialStartingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_initial);
 
 
-        Button button = findViewById(R.id.sign_in_button);
+        RelativeLayout button = findViewById(R.id.button_login);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

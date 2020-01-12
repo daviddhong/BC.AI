@@ -4,17 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:textColor="#383838"
-        android:textStyle="bold"
-        android:textSize="40dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="40dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView5"
+    <RelativeLayout
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Business Card Solutions." />
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_arrow_back_black"
+            android:tint="#383838" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/toppart"
@@ -23,8 +28,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="240dp">
 
+        <TextView
+            android:id="@+id/name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#383838"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/name_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_textview"
+            android:ems="17"
+            android:inputType="textEmailAddress" />
 
         <TextView
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/name_edittext"
             android:id="@+id/email_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,9 +72,9 @@
             android:textColor="#383838"
             android:textStyle="bold" />
 
-
         <EditText
             android:id="@+id/password_edit_text"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/password_textview"
@@ -60,13 +82,7 @@
             android:inputType="textPassword" />
 
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/password_edit_text"
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forgot Your Password?" />
+
 
 
     </RelativeLayout>
@@ -77,11 +93,11 @@
         android:layout_below="@+id/toppart">
 
         <RelativeLayout
-            android:id="@+id/button_login"
+            android:id="@+id/make_account_button"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="58dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/background_rectangle_fill">
 
@@ -89,37 +105,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Sign in"
+                android:text="Make Account"
                 android:textColor="#FFF"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
-        <RelativeLayout
 
-            android:id="@+id/signup_button"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@+id/button_login"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/background_rectangle_blue_border">
-
-            <TextView
-                android:id="@+id/textView_make_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Sign up"
-                android:textColor="#0000ff"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
     </RelativeLayout>
-
 
 
 </RelativeLayout>
