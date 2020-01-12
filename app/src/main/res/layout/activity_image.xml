@@ -8,26 +8,27 @@
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="157dp"/>
+        android:layout_marginBottom="165dp"/>
 
-    <EditText
+    <Button
         android:layout_above="@+id/upload_image_button"
-        android:id="@+id/name_of_b_card"
-        android:layout_width="wrap_content"
+        android:id="@+id/upload_others_image_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="20"
-        android:inputType="textPersonName"
-        android:text="Name of Card" />
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:text="Upload Other Business Card" />
 
     <Button
         android:layout_alignParentBottom="true"
         android:id="@+id/upload_image_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:background="@android:color/holo_blue_dark"
         android:textColor="@android:color/white"
-        android:text="upload" />
+        android:text="Upload My Business Card" />
 
 
 
