@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
@@ -49,6 +51,7 @@ import org.w3c.dom.Text;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ImageActivity extends AppCompatActivity {
@@ -71,6 +74,9 @@ public class ImageActivity extends AppCompatActivity {
 
     private TextView textView;
 
+    private DatabaseReference myCardRef, OtherCardRef, RootRef;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +89,10 @@ public class ImageActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
         currentUID = auth.getUid();
+        OtherCardRef = FirebaseDatabase.getInstance().getReference();
+        myCardRef =FirebaseDatabase.getInstance().getReference().child("Users");
+        OtherCardRef = FirebaseDatabase.getInstance().getReference().child("OthersBusinessCards");
+
         upload_others_button = findViewById(R.id.upload_others_image_button);
         upload_button = findViewById(R.id.upload_image_button);
 
@@ -102,14 +112,14 @@ public class ImageActivity extends AppCompatActivity {
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+                uploadMyCard();
             }
         });
 
         upload_others_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+                uploadOthersCard();
             }
         });
 
@@ -186,34 +196,20 @@ public class ImageActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImage() {
+    private void uploadOthersCard() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        // [START upload_create_reference]
-        // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
-        StorageReference mountainImagesRef = storageRef.child("images").child("myCard").child(currentUID + ".jpg");
-
-        // While the file names are the same, the references point to different files
-//        mountainsRef.getName().equals(mountainImagesRef.getName());    // true
-//        mountainsRef.getPath().equals(mountainImagesRef.getPath());    // false
-        // [END upload_create_reference]
-
-        // [START upload_memory]
-        // Get the data from an ImageView as bytes
+        StorageReference othersCardImageRef = storageRef.child("images").child("othersBusinessCard").child(currentUID + ".jpg");
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache();
-
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = mountainImagesRef.putBytes(data);
+        UploadTask uploadTask = othersCardImageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
                 Toast.makeText(ImageActivity.this, "FAIL", Toast.LENGTH_LONG).show();
                 goToMain();
             }
@@ -221,9 +217,50 @@ public class ImageActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
                 Toast.makeText(ImageActivity.this, "Successful", Toast.LENGTH_LONG).show();
+                String uniqueKEY = OtherCardRef.push().getKey();
+                HashMap<String, Object> riderTicketKey = new HashMap<>();
+                OtherCardRef.updateChildren(riderTicketKey);
+                OtherCardRef = OtherCardRef.child(uniqueKEY);
+                String currentUserID = auth.getCurrentUser().getUid();
+                HashMap<String, Object> profileMap = new HashMap<>();
+//                profileMap.put("name", name2);
+//                profileMap.put("phone", phone2);
+//                profileMap.put("email", email2);
+                profileMap.put("uniqueKEY", uniqueKEY);
+                profileMap.put("myUID", currentUID);
+                OtherCardRef.updateChildren(profileMap);
+                goToMain();
+            }
+        });
+    }
+    private void uploadMyCard() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference myCardImageRef = storageRef.child("images").child("myBusinessCard").child(currentUID + ".jpg");
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask uploadTask = myCardImageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(ImageActivity.this, "FAIL", Toast.LENGTH_LONG).show();
+                goToMain();
+            }
+
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(ImageActivity.this, "Successful", Toast.LENGTH_LONG).show();
+                HashMap<String, String> profileMap = new HashMap<>();
+//                profileMap.put("name", name2);
+//                profileMap.put("phone", phone2);
+//                profileMap.put("email", email2);
+                myCardRef.child(currentUID).setValue(profileMap);
                 goToMain();
             }
 
@@ -234,8 +271,8 @@ public class ImageActivity extends AppCompatActivity {
     private void goToMain() {
         Intent intent = new Intent(ImageActivity.this, MainActivity.class);
         startActivity(intent);
-
     }
+
 
     private void specifyFirebase() {
         final FirebaseAutoMLRemoteModel remoteModel =

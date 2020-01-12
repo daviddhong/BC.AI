@@ -70,7 +70,7 @@ public class ContactsFragment extends Fragment {
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
 
-        StorageReference islandRef = storageRef.child("images/myBusinessCard" + currentUID + ".jpg");
+        StorageReference islandRef = storageRef.child("images/").child("myBusinessCard/").child(currentUID + ".jpg");
 
         final long ONE_MEGABYTE = 1024 * 1024;
         islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
