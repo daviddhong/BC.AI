@@ -30,14 +30,17 @@ public class ImageActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private EditText name_of_picture;
-    private Button upload_button;
+    private Button upload_button, upload_others_button;
 
     private ArrayList<String> pathArray;
     private int arrayposition;
 
-    private FirebaseAuth auth;
     private StorageReference spaceRef;
     private Bitmap image;
+    private FirebaseAuth auth;
+
+    private String currentUID;
+
 
 
     @Override
@@ -46,10 +49,12 @@ public class ImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        name_of_picture = findViewById(R.id.name_of_b_card);
+        auth = FirebaseAuth.getInstance();
+        currentUID = auth.getUid();
+        upload_others_button = findViewById(R.id.upload_others_image_button);
         upload_button = findViewById(R.id.upload_image_button);
         imageView = (ImageView) findViewById(R.id.image_view);
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -59,6 +64,7 @@ public class ImageActivity extends AppCompatActivity {
             }
         }
 
+        setupimage();
 
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +73,17 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
+        upload_others_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage();
+            }
+        });
+
+
+    }
+
+    private void setupimage() {
 
     }
 
@@ -77,12 +94,10 @@ public class ImageActivity extends AppCompatActivity {
         // [START upload_create_reference]
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
-
         // Create a reference to "mountains.jpg"
         StorageReference mountainsRef = storageRef.child("mountains.jpg");
-
         // Create a reference to 'images/mountains.jpg'
-        StorageReference mountainImagesRef = storageRef.child("images/mountains.jpg");
+        StorageReference mountainImagesRef = storageRef.child("images/" + currentUID + ".jpg");
 
         // While the file names are the same, the references point to different files
 //        mountainsRef.getName().equals(mountainImagesRef.getName());    // true
@@ -99,7 +114,7 @@ public class ImageActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = mountainsRef.putBytes(data);
+        UploadTask uploadTask = mountainImagesRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -113,7 +128,7 @@ public class ImageActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
-                Toast.makeText(ImageActivity.this, "Success", Toast.LENGTH_LONG).show();
+                Toast.makeText(ImageActivity.this, "Successful", Toast.LENGTH_LONG).show();
                 goToMain();
             }
 
