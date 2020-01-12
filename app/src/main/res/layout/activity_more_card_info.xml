@@ -52,7 +52,7 @@
                 android:layout_height="35dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_phone"
-                android:tint="#000" />
+                android:tint="#fff" />
         </RelativeLayout>
 
 
@@ -75,7 +75,7 @@
             android:layout_centerVertical="true"
             android:onClick="smsSendMessage"
             android:src="@drawable/ic_message_black_24dp"
-            android:tint="#000" />
+            android:tint="#fff" />
     </RelativeLayout>
 
     </RelativeLayout>

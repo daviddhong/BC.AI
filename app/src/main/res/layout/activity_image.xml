@@ -8,11 +8,11 @@
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="265dp"/>
+        android:layout_marginBottom="288dp"/>
 
     <TextView
         android:layout_centerHorizontal="true"
-        android:text="test"
+        android:text=""
         android:id="@+id/text_view_ml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,9 +25,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@android:color/holo_blue_dark"
+        android:background="#000"
         android:textColor="@android:color/white"
-        android:text="Upload Other Business Card" />
+        android:text="Upload Client's Card"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"/>
 
     <Button
         android:layout_alignParentBottom="true"
@@ -35,24 +37,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:background="@android:color/holo_blue_dark"
+        android:layout_marginLeft="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="#000"
         android:textColor="@android:color/white"
-        android:text="Upload My Business Card" />
-
-    <Button
-        android:id="@+id/button_check"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:text="Upload My Card" />
 
 
-
-
-    <Button
+    <ImageButton
         android:id="@+id/button_select"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="100dp"
-        android:onClick="pickImage"/>
+        android:onClick="pickImage"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/ic_photo_camera"
+        android:tint="#FFF"
+        android:backgroundTint="#000" />
 
 
 

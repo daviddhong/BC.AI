@@ -19,8 +19,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             app:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_photo_camera"
-            android:tint="#FFF"
+            android:src="@drawable/ic_rectangle_2"
             app:fabSize="normal"
             app:borderWidth="0dp"/>
 

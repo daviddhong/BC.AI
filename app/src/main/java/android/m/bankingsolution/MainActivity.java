@@ -91,19 +91,19 @@ public class MainActivity extends AppCompatActivity {
     // MODIFIES: this
     // EFFECTS: Helper function for opening gallery.
     public void openCamera() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE);
+        Intent intent = new Intent(this, ImageActivity.class);
+        startActivity(intent);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            Intent intent = new Intent(this, ImageActivity.class);
-            intent.putExtra("Image", uri.toString());
-            startActivity(intent);
-        }
-    }
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+//            Uri uri = data.getData();
+//            Intent intent = new Intent(this, ImageActivity.class);
+//            intent.putExtra("Image", uri.toString());
+//            startActivity(intent);
+//        }
+//    }
 }
 
 

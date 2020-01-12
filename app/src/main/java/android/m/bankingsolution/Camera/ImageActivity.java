@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,8 +66,6 @@ public class ImageActivity extends AppCompatActivity {
 
     private String currentUID;
 
-    private Button button;
-    private Button button2;
 
     private Bitmap bitmap;
 
@@ -76,32 +77,26 @@ public class ImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
 
+        imageView = (ImageView) findViewById(R.id.image_view);
+        textView = (TextView) findViewById(R.id.text_view_ml);
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
         currentUID = auth.getUid();
         upload_others_button = findViewById(R.id.upload_others_image_button);
         upload_button = findViewById(R.id.upload_image_button);
 
-        imageView = (ImageView) findViewById(R.id.image_view);
-        Intent intent = getIntent();
-        String imageString = intent.getStringExtra("Image");
-        Uri uri = Uri.parse(imageString);
-//        imageView.setImageURI(uri);
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            imageView.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            // handles exception
-        }
-
-        textView = (TextView) findViewById(R.id.text_view_ml);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            String str = bundle.getString("String");
-            if (str != null) {
-                textView.setText(str);
-            }
-        }
+//        imageView = (ImageView) findViewById(R.id.image_view);
+//        Intent intent = getIntent();
+//        String imageString = intent.getStringExtra("Image");
+//        Uri uri = Uri.parse(imageString);
+////        imageView.setImageURI(uri);
+//        try {
+//            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+//            imageView.setImageBitmap(bitmap);
+//        } catch (IOException e) {
+//            // handles exception
+//        }
 
 
         upload_button.setOnClickListener(new View.OnClickListener() {
@@ -118,13 +113,54 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
-        Button button = (Button) findViewById(R.id.button_select);
+        ImageButton button = (ImageButton) findViewById(R.id.button_select);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pick_image();
             }
         });
+    }
+
+    private void detect(View v) {
+
+        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+        FirebaseVisionTextRecognizer firebaseVisionTextRecognizer = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+        firebaseVisionTextRecognizer.processImage(firebaseVisionImage)
+                .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                    @Override
+                    public void onSuccess(FirebaseVisionText firebaseVisionText) {
+                        process_text(firebaseVisionText);
+                    }
+                }).addOnFailureListener(
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    private void process_text(FirebaseVisionText firebaseVisionText) {
+        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
+        if (blocks.size() == 0) {
+            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            String str = "";
+            for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
+                String text = block.getText();
+                for (FirebaseVisionText.Line line : block.getLines()) {
+                    String lineText = line.getText();
+                    for (FirebaseVisionText.Element element : line.getElements()) {
+                        String elementText = element.getText();
+                        str += elementText + " ";
+                        textView.setText(str);
+                    }
+                }
+            }
+        }
     }
 
     public void pick_image() {
@@ -199,47 +235,6 @@ public class ImageActivity extends AppCompatActivity {
         Intent intent = new Intent(ImageActivity.this, MainActivity.class);
         startActivity(intent);
 
-    }
-
-    private void detect(View v) {
-
-        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
-        FirebaseVisionTextRecognizer firebaseVisionTextRecognizer = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
-        firebaseVisionTextRecognizer.processImage(firebaseVisionImage)
-                .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-                    @Override
-                    public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                        process_text(firebaseVisionText);
-                    }
-                }).addOnFailureListener(
-                new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
-
-    private void process_text(FirebaseVisionText firebaseVisionText) {
-        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-        if (blocks.size() == 0) {
-            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else {
-            String str = "";
-            for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
-                String text = block.getText();
-                for (FirebaseVisionText.Line line : block.getLines()) {
-                    String lineText = line.getText();
-                    for (FirebaseVisionText.Element element : line.getElements()) {
-                        String elementText = element.getText();
-                        str += elementText + " ";
-                        textView.setText(str);
-                    }
-                }
-            }
-        }
     }
 
     private void specifyFirebase() {
