@@ -18,8 +18,8 @@
         </activity>
 
         <activity android:name=".MainActivity"/>
-        <activity android:name=".CameraXActivity"/>
-
+        <activity android:name=".Camera.CameraActivity"/>
+        <activity android:name=".Camera.ImageActivity"/>
 
     </application>
 

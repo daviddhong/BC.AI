@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.m.bankingsolution.Camera.CameraActivity;
 import android.m.bankingsolution.Fragments.BotFragment;
 import android.m.bankingsolution.Fragments.ContactsFragment;
 import android.os.Bundle;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     // MODIFIES: this
     // EFFECTS: Helper function for opening cameraX.
     public void openCameraX() {
-        Intent intent = new Intent(this, CameraXActivity.class);
+        Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
     }
 }
