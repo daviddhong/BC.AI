@@ -8,7 +8,16 @@
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="165dp"/>
+        android:layout_marginBottom="265dp"/>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:text="test"
+        android:id="@+id/text_view_ml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_above="@+id/upload_others_image_button"/>
 
     <Button
         android:layout_above="@+id/upload_image_button"
@@ -29,6 +38,18 @@
         android:background="@android:color/holo_blue_dark"
         android:textColor="@android:color/white"
         android:text="Upload My Business Card" />
+
+    <Button
+        android:id="@+id/button_check"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/button_select"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="100dp"
+        android:onClick="pickImage"/>
 
 
 

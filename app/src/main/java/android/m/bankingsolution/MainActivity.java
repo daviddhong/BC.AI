@@ -6,18 +6,37 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.m.bankingsolution.Camera.ImageActivity;
 import android.m.bankingsolution.Fragments.BotFragment;
 import android.m.bankingsolution.Fragments.ContactsFragment;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private int PICK_IMAGE = 1;
+    private Bitmap bitmap;
+    private String str;
+    private String stringFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +89,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // MODIFIES: this
-    // EFFECTS: Helper function for opening cameraX.
+    // EFFECTS: Helper function for opening gallery.
     public void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 0);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
             Intent intent = new Intent(this, ImageActivity.class);
-            intent.putExtra("image", image);
+            intent.putExtra("Image", uri.toString());
             startActivity(intent);
         }
     }

@@ -2,29 +2,51 @@ package android.m.bankingsolution.Camera;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.m.bankingsolution.MainActivity;
 import android.m.bankingsolution.R;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ml.common.FirebaseMLException;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelManager;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.automl.FirebaseAutoMLLocalModel;
+import com.google.firebase.ml.vision.automl.FirebaseAutoMLRemoteModel;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImageActivity extends AppCompatActivity {
 
@@ -41,6 +63,12 @@ public class ImageActivity extends AppCompatActivity {
 
     private String currentUID;
 
+    private Button button;
+    private Button button2;
+
+    private Bitmap bitmap;
+
+    private TextView textView;
 
 
     @Override
@@ -53,18 +81,28 @@ public class ImageActivity extends AppCompatActivity {
         currentUID = auth.getUid();
         upload_others_button = findViewById(R.id.upload_others_image_button);
         upload_button = findViewById(R.id.upload_image_button);
+
         imageView = (ImageView) findViewById(R.id.image_view);
+        Intent intent = getIntent();
+        String imageString = intent.getStringExtra("Image");
+        Uri uri = Uri.parse(imageString);
+//        imageView.setImageURI(uri);
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            imageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            // handles exception
+        }
 
-
+        textView = (TextView) findViewById(R.id.text_view_ml);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            image = (Bitmap) bundle.get("image");
-            if (image != null) {
-                imageView.setImageBitmap(image);
+            String str = bundle.getString("String");
+            if (str != null) {
+                textView.setText(str);
             }
         }
 
-        setupimage();
 
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,13 +118,37 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
-
+        Button button = (Button) findViewById(R.id.button_select);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pick_image();
+            }
+        });
     }
 
-    private void setupimage() {
-
+    public void pick_image() {
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(i, 1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver()
+                        , uri);
+                imageView.setImageBitmap(bitmap);
+
+                detect(imageView);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private void uploadImage() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -139,6 +201,116 @@ public class ImageActivity extends AppCompatActivity {
     private void goToMain() {
         Intent intent = new Intent(ImageActivity.this, MainActivity.class);
         startActivity(intent);
+
+    }
+
+    private void detect(View v) {
+
+        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+        FirebaseVisionTextRecognizer firebaseVisionTextRecognizer = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+        firebaseVisionTextRecognizer.processImage(firebaseVisionImage)
+                .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                    @Override
+                    public void onSuccess(FirebaseVisionText firebaseVisionText) {
+                        process_text(firebaseVisionText);
+                    }
+                }).addOnFailureListener(
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    private void process_text(FirebaseVisionText firebaseVisionText) {
+        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
+        if (blocks.size() == 0) {
+            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            String str = "";
+            for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
+                String text = block.getText();
+                for (FirebaseVisionText.Line line : block.getLines()) {
+                    String lineText = line.getText();
+                    for (FirebaseVisionText.Element element : line.getElements()) {
+                        String elementText = element.getText();
+                        str += elementText + " ";
+                        textView.setText(str);
+                    }
+                }
+            }
+        }
+    }
+
+    private void specifyFirebase() {
+        final FirebaseAutoMLRemoteModel remoteModel =
+                new FirebaseAutoMLRemoteModel.Builder("Business_202011213450").build();
+
+        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
+                .requireWifi()
+                .build();
+
+        FirebaseModelManager.getInstance().download(remoteModel, conditions)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // Success.
+                    }
+                });
+
+        final FirebaseAutoMLLocalModel localModel = new FirebaseAutoMLLocalModel.Builder()
+                .setAssetFilePath("manifest.json")
+                .build();
+
+        FirebaseModelManager.getInstance().isModelDownloaded(remoteModel)
+                .addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean isDownloaded) {
+                        FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder optionsBuilder;
+                        if (isDownloaded) {
+                            optionsBuilder = new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(remoteModel);
+                        } else {
+                            optionsBuilder = new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(localModel);
+                        }
+
+                        FirebaseVisionOnDeviceAutoMLImageLabelerOptions options = optionsBuilder
+                                .setConfidenceThreshold(0.5f).build();
+
+                        FirebaseVisionImageLabeler labeler = null;
+                        try {
+                            labeler = FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(options);
+                        } catch (FirebaseMLException e) {
+                            // Error. 
+                        }
+
+                        Bitmap bitmapML = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmapML);
+
+                        labeler.processImage(image)
+                                .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
+                                    @Override
+                                    public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                                        // Task completed successfully
+                                        // ...
+                                        for (FirebaseVisionImageLabel label : labels) {
+                                            String text = label.getText();
+                                            float confidence = label.getConfidence();
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Task failed with an exception
+                                        // ...
+                                    }
+                                });
+                    }
+                });
+
 
     }
 
