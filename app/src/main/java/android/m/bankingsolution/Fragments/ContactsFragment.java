@@ -26,7 +26,17 @@ public class ContactsFragment extends Fragment {
         myCardView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
         initiateFields();
+        signout();
+        return myCardView;
 
+    }
+
+    private void initiateFields() {
+        SignOut = myCardView.findViewById(R.id.SignOutButton);
+        auth = FirebaseAuth.getInstance();
+    }
+
+    private void signout() {
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,13 +46,7 @@ public class ContactsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        return myCardView;
-
     }
 
-    private void initiateFields() {
-        SignOut = myCardView.findViewById(R.id.SignOutButton);
-        auth = FirebaseAuth.getInstance();
 
-    }
 }

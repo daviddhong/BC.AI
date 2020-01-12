@@ -1,15 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF">
+    android:background="#FFF"
+    android:orientation="vertical">
 
-
-    <Button
-        android:id="@+id/SignOutButton"
+    <RelativeLayout
+        android:id="@+id/toprelativelayoutmyprofile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Out" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="450dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/SignOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Sign Out" />
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/SignOutButton" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="300dp">
+
+        <RelativeLayout
+            android:id="@+id/leftrelativelayoutmyprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft= "20dp"
+            android:id="@+id/myownname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:textSize="20sp"
+            android:textColor="#383838"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_below="@+id/myownname"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft= "20dp"
+            android:id="@+id/myownphonenumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number:"
+            android:textSize="20sp"
+            android:textColor="#383838"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_below="@+id/myownphonenumber"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft= "20dp"
+            android:id="@+id/myownemail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email:"
+            android:textSize="20sp"
+            android:textColor="#383838"
+            android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_toRightOf="@+id/leftrelativelayoutmyprofile"
+            android:id="@+id/rightrelativelayoutmyprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft= "20dp"
+                android:id="@+id/myownnamedata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="20sp"
+                android:textColor="#383838"
+                 />
+
+            <TextView
+                android:layout_below="@+id/myownnamedata"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft= "20dp"
+                android:id="@+id/myownphonenumberdata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123-123-1234"
+                android:textSize="20sp"
+                android:textColor="#383838"
+                 />
+
+            <TextView
+                android:layout_below="@+id/myownphonenumberdata"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft= "20dp"
+                android:id="@+id/myownemaildata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email@nwhacks.com"
+                android:textSize="20sp"
+                android:textColor="#383838"
+                />
+
+        </RelativeLayout>
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_below="@+id/leftrelativelayoutmyprofile"
+            android:id="@+id/make_account_button"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/background_rectangle_fill">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Send My Business Card"
+                android:textColor="#FFF"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
