@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ public class ContactsFragment extends Fragment {
     private View myCardView;
     private Button SignOut;
     private FirebaseAuth auth;
+    private ImageView mybcimage;
 
     @Nullable
     @Override
@@ -26,14 +28,17 @@ public class ContactsFragment extends Fragment {
         myCardView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
         initiateFields();
+        retrieveMyBusinessCard();
         signout();
         return myCardView;
 
     }
 
+
     private void initiateFields() {
         SignOut = myCardView.findViewById(R.id.SignOutButton);
         auth = FirebaseAuth.getInstance();
+        mybcimage = myCardView.findViewById(R.id.mybusinesscardimageview);
     }
 
     private void signout() {
@@ -48,5 +53,8 @@ public class ContactsFragment extends Fragment {
         });
     }
 
+    private void retrieveMyBusinessCard() {
+
+    }
 
 }
