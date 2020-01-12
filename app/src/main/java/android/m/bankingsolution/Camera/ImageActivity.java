@@ -311,7 +311,7 @@ public class ImageActivity extends AppCompatActivity {
                     }
                 });
 
-
+    // Comment
     }
 
 }
