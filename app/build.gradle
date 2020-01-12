@@ -18,9 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    aaptOptions {
-        noCompress "tflite"
-    }
 }
 
 dependencies {
@@ -47,11 +44,13 @@ dependencies {
     // EFFECTS: Added for Google Firebase Realtime Database.
     implementation 'com.google.firebase:firebase-database:19.2.0'
 
-    // Firebase ML
+    // EFFECTS: Added for Google Firebase recycler view.
+    implementation 'com.firebaseui:firebase-ui-database:5.0.0'
+
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
     implementation 'com.google.firebase:firebase-ml-vision-automl:18.0.3'
     implementation 'com.google.firebase:firebase-ml-vision-image-label-model:19.0.0'
     implementation 'com.google.firebase:firebase-ml-vision-face-model:19.0.0'
     implementation 'com.google.firebase:firebase-ml-model-interpreter:22.0.1'
+
 }
-apply plugin: 'com.google.gms.google-services'

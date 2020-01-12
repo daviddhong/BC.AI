@@ -18,9 +18,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="Sign Out" />
+            android:background="@drawable/background_rectangle_fill"
+            android:text="Sign Out"
+            android:textColor="#FFF" />
 
         <ImageView
+            android:layout_marginTop="10dp"
             android:id="@+id/mybusinesscardimageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,121 +33,120 @@
 
 
     <RelativeLayout
+        android:id="@+id/borderofcardbusi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="300dp">
+        android:layout_height="250dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/background_rectangle_hof_border"
+        android:padding="4dp">
 
         <RelativeLayout
             android:id="@+id/leftrelativelayoutmyprofile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginLeft= "20dp"
-            android:id="@+id/myownname"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name:"
-            android:textSize="20sp"
-            android:textColor="#383838"
-            android:textStyle="bold" />
+            android:layout_marginTop="50dp">
 
-        <TextView
-            android:layout_below="@+id/myownname"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft= "20dp"
-            android:id="@+id/myownphonenumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone Number:"
-            android:textSize="20sp"
-            android:textColor="#383838"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_below="@+id/myownphonenumber"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft= "20dp"
-            android:id="@+id/myownemail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email:"
-            android:textSize="20sp"
-            android:textColor="#383838"
-            android:textStyle="bold" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_toRightOf="@+id/leftrelativelayoutmyprofile"
-            android:id="@+id/rightrelativelayoutmyprofile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             <TextView
-                android:layout_marginLeft= "20dp"
-                android:id="@+id/myownnamedata"
+                android:id="@+id/myownname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:text="Name:"
                 android:textColor="#383838"
-                 />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_below="@+id/myownnamedata"
+                android:id="@+id/myownphonenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myownname"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft= "20dp"
-                android:id="@+id/myownphonenumberdata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="123-123-1234"
-                android:textSize="20sp"
+                android:text="Phone Number:"
                 android:textColor="#383838"
-                 />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_below="@+id/myownphonenumberdata"
+                android:id="@+id/myownemail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myownphonenumber"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft= "20dp"
-                android:id="@+id/myownemaildata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email@nwhacks.com"
-                android:textSize="20sp"
+                android:text="Email:"
                 android:textColor="#383838"
-                />
-
-        </RelativeLayout>
-
-
-
-
-
-
-        <RelativeLayout
-            android:layout_below="@+id/leftrelativelayoutmyprofile"
-            android:id="@+id/make_account_button"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/background_rectangle_fill">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Send My Business Card"
-                android:textColor="#FFF"
-                android:textSize="17sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
 
+        <RelativeLayout
+            android:id="@+id/rightrelativelayoutmyprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="170dp"
+            android:layout_marginTop="50dp"
 
+            >
 
+            <TextView
+                android:id="@+id/myownnamedata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Tim Apple"
+                android:textColor="#383838"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/myownphonenumberdata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myownnamedata"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="012-345-5678"
+                android:textColor="#383838"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/myownemaildata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myownphonenumberdata"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Email@nwhacks.com"
+                android:textColor="#383838"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/borderofcardbusi"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/make_account_button"
+        android:layout_width="300dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/background_rectangle_fill">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Send My Business Card"
+            android:textColor="#FFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

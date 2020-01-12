@@ -70,7 +70,7 @@ public class ContactsFragment extends Fragment {
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
 
-        StorageReference islandRef = storageRef.child("images/" + currentUID + ".jpg");
+        StorageReference islandRef = storageRef.child("images/myBusinessCard" + currentUID + ".jpg");
 
         final long ONE_MEGABYTE = 1024 * 1024;
         islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -87,7 +87,7 @@ public class ContactsFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
-                Toast.makeText(getActivity(), "Failed to find image", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Upload Your Business Card", Toast.LENGTH_LONG).show();
 
             }
         });

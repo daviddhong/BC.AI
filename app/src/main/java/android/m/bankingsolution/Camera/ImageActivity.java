@@ -156,10 +156,7 @@ public class ImageActivity extends AppCompatActivity {
         // [START upload_create_reference]
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
-        // Create a reference to "mountains.jpg"
-        StorageReference mountainsRef = storageRef.child("mountains.jpg");
-        // Create a reference to 'images/mountains.jpg'
-        StorageReference mountainImagesRef = storageRef.child("images/" + currentUID + ".jpg");
+        StorageReference mountainImagesRef = storageRef.child("images").child("myCard").child(currentUID + ".jpg");
 
         // While the file names are the same, the references point to different files
 //        mountainsRef.getName().equals(mountainImagesRef.getName());    // true
