@@ -4,3 +4,12 @@ Business Card AI is a native mobile application that uses Machine Learning to id
 The words are then idenfied by key phrases such as @ and # to identify emails and phone numbers respectively. Overall, it 
 aims to replace the use of physical business cards as they can be difficult to manage as wastes paper. 
 
+## Tech Stack
+
+* Google Firebase
+* Google ML Kity
+* Java
+
+## Steps to run the app
+
+1. 
