@@ -17,15 +17,14 @@ aims to replace the use of physical business cards as they can be difficult to m
 
 ## Visual Guide
 Create account and sign in:
-<img src= "https://imgur.com/c6qF6nN">
-![BC2](https://imgur.com/U5b2hG1)
+<img src= "https://i.imgur.com/c6qF6nN.jpg" width="300">
+<img src= "https://i.imgur.com/U5b2hG1.jpg" width="300">
 
 Upload your own business card and client's cards:
-![BC4](https://imgur.com/hVI9Rid)
+<img src= "https://i.imgur.com/hVI9Rid.jpg" width="300">
 
 Your own business card:
-![BC3](https://imgur.com/IJV0BX4)
+<img src= "https://i.imgur.com/IJV0BX4.jpg" width="300">
 
 List of your client's cards:
-![BC5](https://imgur.com/xHippPL)
-
+<img src= "https://i.imgur.com/xHippPL.jpg" width="300">
