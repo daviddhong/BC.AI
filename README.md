@@ -18,20 +18,20 @@ aims to replace the use of physical business cards as they can be difficult to m
 ## Visual Guide
 1. Create account and sign in:
 
-<img src= "https://i.imgur.com/c6qF6nN.jpg" width="300"><img src= "https://i.imgur.com/U5b2hG1.jpg" width="300">
+<img src= "https://i.imgur.com/c6qF6nN.jpg" width="300">  <img src= "https://i.imgur.com/U5b2hG1.jpg" width="300">
 
-2. Upload your own business card and client's cards:
+2. Upload your own business card and your client's cards:
 
 <img src= "https://i.imgur.com/hVI9Rid.jpg" width="300">
 
-3. You can manage your own business card:
+3. Manage your own business card:
 
 <img src= "https://i.imgur.com/IJV0BX4.jpg" width="300">
 
-4. Can see list of your client's cards:
+4. See list of your client's cards:
 
 <img src= "https://i.imgur.com/xHippPL.jpg" width="300">
 
-5. Option to Call or Message directly from list of client;s cards:
+5. Option to call or message directly from your list of your clients:
 
 <img src= "https://i.imgur.com/YLZiO7n.jpg" width="300">
