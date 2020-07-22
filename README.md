@@ -17,7 +17,7 @@ aims to replace the use of physical business cards as they can be difficult to m
 
 ## Visual Guide
 Create account and sign in:
-![BC1](https://imgur.com/c6qF6nN)
+<img src= "https://imgur.com/c6qF6nN">
 ![BC2](https://imgur.com/U5b2hG1)
 
 Upload your own business card and client's cards:
