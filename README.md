@@ -22,7 +22,7 @@ aims to replace the use of physical business cards as they can be difficult to m
 
 2. Upload your own business card and your client's cards:
 
-<img src= "https://i.imgur.com/hVI9Rid.jpg" width="300">
+<img src= "https://i.imgur.com/lJs9qZE.jpg" width="300">  <img src= "https://i.imgur.com/hVI9Rid.jpg" width="300">
 
 3. Manage your own business card:
 
